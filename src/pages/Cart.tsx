@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { cartNumberSelector } from "../recoil/selector";
+import { localProductsSelector } from "../recoil/selector";
 import {
   Header,
   Page,
@@ -9,18 +9,47 @@ import {
   GuideBox,
   ErrorBoundary,
 } from "../components";
+import { LocalProductType } from "../types/domain";
+import { selectedProductsState } from "../recoil/atom";
+import { api } from "../api";
+import { useLocalProducts } from "../hooks/useLocalProducts";
 
 const Cart = () => {
-  const cartNumber = useRecoilValue(cartNumberSelector);
+  const { updateLocalProducts } = useLocalProducts();
+  const cartProducts = useRecoilValue<LocalProductType[]>(
+    localProductsSelector
+  );
+  const selectedProducts = useRecoilValue<LocalProductType[]>(
+    selectedProductsState
+  );
+
+  const deleteSelectedProduct = async () => {
+    await Promise.all(
+      selectedProducts.map((product) =>
+        api.delete(`/cart-items/${product.cartItemId}`)
+      )
+    );
+    updateLocalProducts();
+  };
+
+  const deleteOneProduct = async (cartItemId: number) => {
+    await api.delete(`/cart-items/${cartItemId}`);
+    updateLocalProducts();
+  };
 
   return (
     <ErrorBoundary>
       <Header />
       <Page>
         <TitleBox>장바구니</TitleBox>
-        {cartNumber ? (
+        {cartProducts.length > 0 ? (
           <Container>
-            <CartProductList />
+            <CartProductList
+              cartProducts={cartProducts}
+              selectedProducts={selectedProducts}
+              deleteSelectedProduct={deleteSelectedProduct}
+              deleteOneProduct={deleteOneProduct}
+            />
             <TotalPriceTable discountPrice={null} />
           </Container>
         ) : (

@@ -1,49 +1,40 @@
-import { useRecoilValue } from "recoil";
 import type { LocalProductType, ProductType } from "../types/domain";
 import styled from "styled-components";
 import { TrashCanIcon } from "../assets";
 import { Counter } from "./Counter";
-import { localProductsSelector } from "../recoil/selector";
 import { useCheckBox } from "../hooks/useCheckBox";
-import { selectedProductsState } from "../recoil/atom";
-import { useLocalProducts } from "../hooks/useLocalProducts";
-import { api } from "../api";
 
-export const CartProductList = () => {
-  const { updateLocalProducts } = useLocalProducts();
-  const cartProducts = useRecoilValue<LocalProductType[]>(
-    localProductsSelector
-  );
-  const selectedProducts = useRecoilValue<LocalProductType[]>(
-    selectedProductsState
-  );
+interface CartProductListType {
+  cartProducts: LocalProductType[];
+  selectedProducts: LocalProductType[];
+  deleteSelectedProduct: () => Promise<void>;
+  deleteOneProduct: (cartItemId: number) => Promise<void>;
+}
+
+export const CartProductList = ({
+  cartProducts,
+  selectedProducts,
+  deleteSelectedProduct,
+  deleteOneProduct,
+}: CartProductListType) => {
   const {
     checkedArray,
     allChecked,
-    removeCheckedArray,
-    removeTargetIndex,
     handleCheckBox,
     handleAllCheckBox,
+    removeCheckedArray,
+    removeTargetIndex,
   } = useCheckBox();
 
-  const handleDeleteButtonClicked = async () => {
-    await Promise.all(
-      selectedProducts.map((product) =>
-        api.delete(`/cart-items/${product.cartItemId}`)
-      )
-    );
-
+  const deleteProducts = () => {
+    deleteSelectedProduct();
     removeCheckedArray();
-    await updateLocalProducts();
   };
 
-  const handleTrashCanClicked =
-    (cartItemId: number, index: number) => async () => {
-      await api.delete(`/cart-items/${cartItemId}`);
-
-      removeTargetIndex(index);
-      await updateLocalProducts();
-    };
+  const deleteProduct = (cartItemId: number, index: number) => () => {
+    deleteOneProduct(cartItemId);
+    removeTargetIndex(index);
+  };
 
   return (
     <Wrapper>
@@ -54,8 +45,8 @@ export const CartProductList = () => {
             {...product}
             key={product.id}
             checked={checkedArray[index]}
-            onDeleteHandler={handleTrashCanClicked(product.cartItemId, index)}
-            onChangeHandler={handleCheckBox(index)}
+            onDelete={deleteProduct(product.cartItemId, index)}
+            onChange={handleCheckBox(index)}
           />
         ))}
       </CartProductsContainer>
@@ -71,7 +62,7 @@ export const CartProductList = () => {
         <p>
           전체선택 ({selectedProducts.length}/{cartProducts.length})
         </p>
-        <button onClick={handleDeleteButtonClicked}>선택삭제</button>
+        <button onClick={deleteProducts}>선택삭제</button>
       </AllCheckContainer>
     </Wrapper>
   );
@@ -79,8 +70,8 @@ export const CartProductList = () => {
 
 interface CartProductType extends ProductType {
   checked: boolean;
-  onDeleteHandler: () => Promise<void>;
-  onChangeHandler: () => void;
+  onDelete: () => void;
+  onChange: () => void;
 }
 
 const CartProduct = ({
@@ -89,20 +80,20 @@ const CartProduct = ({
   price,
   imageUrl,
   checked,
-  onDeleteHandler,
-  onChangeHandler,
+  onDelete,
+  onChange,
 }: CartProductType) => {
   return (
     <ProductWrapper>
       <TrashCanIconBox>
-        <img src={TrashCanIcon} alt="휴지통" onClick={onDeleteHandler} />
+        <img src={TrashCanIcon} alt="휴지통" onClick={onDelete} />
       </TrashCanIconBox>
       <CheckBoxLabel htmlFor="checkProduct">
         <CheckBox
           id="checkProduct"
           type="checkbox"
           checked={checked}
-          onChange={onChangeHandler}
+          onChange={onChange}
         />
       </CheckBoxLabel>
       <img src={imageUrl} alt="상품이미지" />
