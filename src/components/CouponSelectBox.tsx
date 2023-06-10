@@ -4,42 +4,46 @@ import { ArrowDownIcon } from "../assets";
 import { NONE_SELECTED_INDEX } from "../constants";
 import { MyCouponType } from "../types/domain";
 
-interface CouponSelectBoxType {
-  type: "get" | "apply";
-  coupons: MyCouponType[];
-  onSelectHandler: (index: number) => void;
-}
+type CouponPurposeType = "get" | "apply";
 
-const TITLE_GET = "발급 가능한 쿠폰";
-const TITLE_APPLY = "쿠폰 적용하기";
+const COUPON_TITLE_MAP: Record<CouponPurposeType, string> = {
+  get: "발급 가능한 쿠폰",
+  apply: "쿠폰 적용하기",
+};
+
+interface CouponSelectBoxType {
+  type: CouponPurposeType;
+  coupons: MyCouponType[];
+  onSelect: (index: number) => void;
+}
 
 export const CouponSelectBox = ({
   type,
   coupons,
-  onSelectHandler,
+  onSelect,
 }: CouponSelectBoxType) => {
-  const defaultTitle = type === "get" ? TITLE_GET : TITLE_APPLY;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [couponTitle, setCouponTitle] = useState<string>(defaultTitle);
+  const [couponTitle, setCouponTitle] = useState<string>(
+    COUPON_TITLE_MAP[type]
+  );
 
-  const handleCouponClicked = (couponTitle: string, index: number) => () => {
-    onSelectHandler(index);
+  const selectCoupon = (couponTitle: string, index: number) => () => {
+    onSelect(index);
     setCouponTitle(couponTitle);
     setIsOpen(false);
   };
 
-  const handleTitleClicked = () => {
-    setIsOpen(!isOpen);
-
-    if (type === "get") {
-      onSelectHandler(NONE_SELECTED_INDEX);
-      setCouponTitle(TITLE_GET);
+  const toggleSelectBox = () => {
+    if (isOpen && type === "get") {
+      onSelect(NONE_SELECTED_INDEX);
+      setCouponTitle(COUPON_TITLE_MAP[type]);
     }
+    setIsOpen(!isOpen);
   };
 
   return (
     <Wrapper>
-      <TitleContainer $isOpen={isOpen} onClick={handleTitleClicked}>
+      <TitleContainer $isOpen={isOpen} onClick={toggleSelectBox}>
         <p>{couponTitle}</p>
         <img src={ArrowDownIcon} alt="화살표" />
       </TitleContainer>
@@ -49,7 +53,7 @@ export const CouponSelectBox = ({
             return type === "apply" ? (
               <CouponContainer
                 key={coupon.id}
-                onClick={handleCouponClicked(coupon.name, index)}
+                onClick={selectCoupon(coupon.name, index)}
                 $isAvailable={coupon.isAvailable}
                 disabled={!coupon.isAvailable}
               >
@@ -68,7 +72,7 @@ export const CouponSelectBox = ({
             ) : (
               <CouponContainer
                 key={coupon.id}
-                onClick={handleCouponClicked(coupon.name, index)}
+                onClick={selectCoupon(coupon.name, index)}
                 $isAvailable={true}
               >
                 <NameBox>{coupon.name}</NameBox>
@@ -80,7 +84,10 @@ export const CouponSelectBox = ({
           })}
           {type === "apply" && (
             <NotAppliedCouponBox
-              onClick={handleCouponClicked(TITLE_APPLY, NONE_SELECTED_INDEX)}
+              onClick={selectCoupon(
+                COUPON_TITLE_MAP[type],
+                NONE_SELECTED_INDEX
+              )}
             >
               쿠폰적용안함
             </NotAppliedCouponBox>

@@ -85,7 +85,7 @@ const Order = () => {
             <CouponSelectBox
               type="apply"
               coupons={coupons}
-              onSelectHandler={handleCouponSelected}
+              onSelect={handleCouponSelected}
             />
             <TotalPriceTable
               discountPrice={discountPrice}

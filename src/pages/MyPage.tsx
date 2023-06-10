@@ -70,7 +70,7 @@ const MyPage = () => {
             <CouponSelectBox
               type="get"
               coupons={coupons}
-              onSelectHandler={handleCouponSelected}
+              onSelect={handleCouponSelected}
             />
             {selectedCouponIndex !== -1 && (
               <Button onClick={handleButtonClicked}>발급 받기</Button>
