@@ -1,5 +1,5 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { useRouter } from "../hooks/useRouter";
 import { ROUTER_PATH } from "../router";
 import { OrderDetailType } from "../types/domain";
 
@@ -8,14 +8,14 @@ export const OrderHistory = ({
   products,
   totalProductPrice,
 }: OrderDetailType) => {
-  const { goPage } = useRouter();
+  const navigate = useNavigate();
 
   return (
     <Wrapper key={id}>
       <OrderTitleContainer>
         <span>주문 번호 : {id}</span>
         {!totalProductPrice && (
-          <p onClick={goPage(ROUTER_PATH.OrderDetail + `/${id}`)}>
+          <p onClick={() => navigate(ROUTER_PATH.OrderDetail + `/${id}`)}>
             상세보기 {">"}
           </p>
         )}

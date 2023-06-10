@@ -3,7 +3,6 @@ import { CartIcon, HumanIcon } from "../assets";
 import { useRecoilValue } from "recoil";
 import { cartNumberSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
-import { useRouter } from "../hooks/useRouter";
 import { loginState, memberState } from "../recoil/atom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ServerSelectBox } from "./ServerSelectBox";
@@ -11,7 +10,6 @@ import { useLoginForm } from "../hooks/useLoginForm";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { goPage } = useRouter();
   const { logout } = useLoginForm();
   const location = useLocation();
   const user = useRecoilValue(memberState);
@@ -27,10 +25,10 @@ export const Header = () => {
       <NavContainer>
         <ServerSelectBox />
         {!isLogined ? (
-          <p onClick={goPage(ROUTER_PATH.Login)}>로그인</p>
+          <p onClick={() => navigate(ROUTER_PATH.Login)}>로그인</p>
         ) : (
           <>
-            <CartContainer onClick={goPage(ROUTER_PATH.Cart)}>
+            <CartContainer onClick={() => navigate(ROUTER_PATH.Cart)}>
               <CartBox pathname={location.pathname}>
                 {user.nickname}의 장바구니
               </CartBox>
@@ -41,12 +39,12 @@ export const Header = () => {
             </CartContainer>
             <MypageBox
               pathname={location.pathname}
-              onClick={goPage(ROUTER_PATH.MyPage)}
+              onClick={() => navigate(ROUTER_PATH.MyPage)}
             >
               마이페이지
             </MypageBox>
             <HumanIconBox
-              onClick={goPage(ROUTER_PATH.MyPage)}
+              onClick={() => navigate(ROUTER_PATH.MyPage)}
               src={HumanIcon}
               alt="홈카트"
             />

@@ -1,11 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { Button, Page } from "../components";
 import { useLoginForm } from "../hooks/useLoginForm";
-import { useRouter } from "../hooks/useRouter";
 import { ROUTER_PATH } from "../router";
 
 const Login = () => {
-  const { goPage } = useRouter();
+  const navigate = useNavigate();
   const {
     username,
     password,
@@ -15,6 +15,10 @@ const Login = () => {
     handlePasswordKey,
     handleFormSubmitted,
   } = useLoginForm();
+
+  const goMainPage = () => {
+    navigate(ROUTER_PATH.Main);
+  };
 
   return (
     <Page>
@@ -49,7 +53,7 @@ const Login = () => {
         />
         <ButtonContainer>
           <Button type="submit">로그인 하기</Button>
-          <Button type="button" onClick={goPage(ROUTER_PATH.Main)}>
+          <Button type="button" onClick={goMainPage}>
             다시 상품 목록 보러가기
           </Button>
         </ButtonContainer>
