@@ -33,13 +33,13 @@ const request = async (path: string, init?: RequestInit) => {
 export const api = {
   get: (path: string) => request(path).then((response) => response.json()),
 
-  patch: <T>(path: string, payload?: T) =>
+  patch: (path: string, payload?: unknown) =>
     request(path, {
       method: "PATCH",
       body: JSON.stringify(payload),
     }),
 
-  post: <T>(path: string, payload?: T) =>
+  post: (path: string, payload?: unknown) =>
     request(path, {
       method: "POST",
       body: JSON.stringify(payload),
