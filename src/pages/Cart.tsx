@@ -37,28 +37,29 @@ const Cart = () => {
     updateLocalProducts();
   };
 
+  if (cartProducts.length === 0)
+    return (
+      <GuideBox
+        icon="🛒"
+        message="장바구니가 텅 비었어요"
+        guideMessage="상품 담으러 가기"
+      />
+    );
+
   return (
     <ErrorBoundary>
       <Header />
       <Page>
         <TitleBox>장바구니</TitleBox>
-        {cartProducts.length > 0 ? (
-          <Container>
-            <CartProductList
-              cartProducts={cartProducts}
-              selectedProducts={selectedProducts}
-              deleteSelectedProduct={deleteSelectedProduct}
-              deleteOneProduct={deleteOneProduct}
-            />
-            <TotalPriceTable discountPrice={null} />
-          </Container>
-        ) : (
-          <GuideBox
-            icon="🛒"
-            message="장바구니가 텅 비었어요"
-            guideMessage="상품 담으러 가기"
+        <Container>
+          <CartProductList
+            cartProducts={cartProducts}
+            selectedProducts={selectedProducts}
+            deleteSelectedProduct={deleteSelectedProduct}
+            deleteOneProduct={deleteOneProduct}
           />
-        )}
+          <TotalPriceTable discountPrice={null} />
+        </Container>
       </Page>
     </ErrorBoundary>
   );
