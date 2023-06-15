@@ -26,20 +26,21 @@ const OrderHistory = () => {
     fetchOrders();
   }, []);
 
+  if (orders.length === 0)
+    return (
+      <GuideBox
+        icon="🛒"
+        message="주문 목록이 없어요"
+        guideMessage="상품 주문하러 가기"
+      />
+    );
+
   return (
     <ErrorBoundary>
       <Header />
       <Page>
         <TitleBox>주문 목록</TitleBox>
-        {orders.length !== 0 ? (
-          <OrderHistoryList orders={orders} />
-        ) : (
-          <GuideBox
-            icon="🛒"
-            message="주문 목록이 없어요"
-            guideMessage="상품 주문하러 가기"
-          />
-        )}
+        <OrderHistoryList orders={orders} />
       </Page>
     </ErrorBoundary>
   );
