@@ -15,17 +15,13 @@ export const useCheckBox = () => {
 
   useEffect(() => {
     setSelectedProducts(
-      cartProducts.filter(
-        (cartProduct, index) => checkedArray[index] && cartProduct
-      )
+      cartProducts.filter((product, index) => checkedArray[index] && product)
     );
   }, [cartProducts, checkedArray, setSelectedProducts]);
 
-  const getAllChecked = () => {
-    return checkedArray.every((checked) => checked);
-  };
+  const getAllChecked = () => checkedArray.every((checked) => checked);
 
-  const handleCheckBox = (changedIndex: number) => () => {
+  const toggleOne = (changedIndex: number) => () => {
     setCheckedArray((prev) =>
       prev.map((checked, index) =>
         changedIndex === index ? !checked : checked
@@ -33,11 +29,11 @@ export const useCheckBox = () => {
     );
   };
 
-  const handleAllCheckBox = () => {
+  const toggleAll = () => {
     setCheckedArray((prev) => prev.map(() => !getAllChecked()));
   };
 
-  const removeCheckedArray = () => {
+  const removeSelectedIndex = () => {
     setCheckedArray((prev) => prev.filter((checked) => !checked));
   };
 
@@ -45,14 +41,12 @@ export const useCheckBox = () => {
     setCheckedArray((prev) => prev.filter((_, index) => index !== targetIndex));
   };
 
-  const allChecked = getAllChecked();
-
   return {
     checkedArray,
-    allChecked,
-    removeCheckedArray,
+    getAllChecked,
+    toggleOne,
+    toggleAll,
+    removeSelectedIndex,
     removeTargetIndex,
-    handleCheckBox,
-    handleAllCheckBox,
   };
 };

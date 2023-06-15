@@ -46,7 +46,7 @@ export const Header = () => {
             <HumanIconBox
               onClick={() => navigate(ROUTER_PATH.MyPage)}
               src={HumanIcon}
-              alt="홈카트"
+              alt="사람"
             />
             <span onClick={logout}>로그아웃</span>
           </>

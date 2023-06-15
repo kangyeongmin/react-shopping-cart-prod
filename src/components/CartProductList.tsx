@@ -19,16 +19,16 @@ export const CartProductList = ({
 }: CartProductListType) => {
   const {
     checkedArray,
-    allChecked,
-    handleCheckBox,
-    handleAllCheckBox,
-    removeCheckedArray,
+    getAllChecked,
+    toggleOne,
+    toggleAll,
+    removeSelectedIndex,
     removeTargetIndex,
   } = useCheckBox();
 
   const deleteProducts = () => {
     deleteSelectedProduct();
-    removeCheckedArray();
+    removeSelectedIndex();
   };
 
   const deleteProduct = (cartItemId: number, index: number) => () => {
@@ -46,7 +46,7 @@ export const CartProductList = ({
             key={product.id}
             checked={checkedArray[index]}
             onDelete={deleteProduct(product.cartItemId, index)}
-            onChange={handleCheckBox(index)}
+            onChange={toggleOne(index)}
           />
         ))}
       </CartProductsContainer>
@@ -55,8 +55,8 @@ export const CartProductList = ({
           <CheckBox
             id="allProduct"
             type="checkbox"
-            checked={allChecked}
-            onChange={handleAllCheckBox}
+            checked={getAllChecked()}
+            onChange={toggleAll}
           />
         </CheckBoxLabel>
         <p>

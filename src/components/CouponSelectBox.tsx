@@ -49,8 +49,8 @@ export const CouponSelectBox = ({
       </TitleContainer>
       {isOpen && (
         <>
-          {coupons.map((coupon, index) => {
-            return type === "apply" ? (
+          {coupons.map((coupon, index) =>
+            type === "apply" ? (
               <CouponContainer
                 key={coupon.id}
                 onClick={selectCoupon(coupon.name, index)}
@@ -61,13 +61,11 @@ export const CouponSelectBox = ({
                 <MinPriceBox>
                   {coupon.minOrderPrice.toLocaleString()}원 이상 주문시
                 </MinPriceBox>
-                {coupon.isAvailable ? (
-                  <DiscountPriceBox>
-                    -{coupon.discountPrice.toLocaleString()}원
-                  </DiscountPriceBox>
-                ) : (
-                  <DiscountPriceBox>적용불가</DiscountPriceBox>
-                )}
+                <DiscountPriceBox>
+                  {coupon.isAvailable
+                    ? `-${coupon.discountPrice.toLocaleString()}원`
+                    : "적용불가"}
+                </DiscountPriceBox>
               </CouponContainer>
             ) : (
               <CouponContainer
@@ -80,8 +78,8 @@ export const CouponSelectBox = ({
                   {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
                 </MinPriceBox>
               </CouponContainer>
-            );
-          })}
+            )
+          )}
           {type === "apply" && (
             <NotAppliedCouponBox
               onClick={selectCoupon(
