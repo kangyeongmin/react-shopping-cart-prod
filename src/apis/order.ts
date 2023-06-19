@@ -1,4 +1,4 @@
-import { api } from ".";
+import { api } from "./api";
 import { LocalProductType } from "../types/domain";
 
 const ENDPOINT = "/orders";

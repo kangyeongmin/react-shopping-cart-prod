@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { couponApi } from "../api/coupon";
+import { couponApi } from "../apis/coupon";
 import {
   Button,
   CouponSelectBox,

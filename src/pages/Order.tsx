@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { api } from "../api";
-import { orderApi } from "../api/order";
+import { api } from "../apis/api";
+import { orderApi } from "../apis/order";
 import {
   CouponSelectBox,
   ErrorBoundary,

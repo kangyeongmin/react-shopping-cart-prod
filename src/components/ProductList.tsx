@@ -5,10 +5,10 @@ import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
 import { MIN_QUANTITY } from "../constants";
-import { api } from "../api";
+import { api } from "../apis/api";
 import { useToast } from "../hooks/useToast";
 import { useLocalProducts } from "../hooks/useLocalProducts";
-import { cartApi } from "../api/cart";
+import { cartApi } from "../apis/cart";
 
 export const ProductList = () => {
   const { showToast } = useToast();

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { orderApi } from "../api/order";
+import { orderApi } from "../apis/order";
 import {
   ErrorBoundary,
   GuideBox,

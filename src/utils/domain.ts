@@ -1,6 +1,6 @@
-import { api } from "../api";
-import { cartApi } from "../api/cart";
-import { productApi } from "../api/product";
+import { api } from "../apis/api";
+import { cartApi } from "../apis/cart";
+import { productApi } from "../apis/product";
 import { MIN_QUANTITY } from "../constants";
 import { CartItemType, LocalProductType, ProductType } from "../types/domain";
 

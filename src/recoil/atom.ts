@@ -5,7 +5,7 @@ import {
   ToastType,
   MemberType,
 } from "../types/domain";
-import { api } from "../api";
+import { api } from "../apis/api";
 import { makeLocalProducts, makeProducts } from "../utils/domain";
 import { getLocalStorage } from "../utils";
 import {
@@ -13,8 +13,8 @@ import {
   KEY_LOCALSTORAGE_LOGIN_TOKEN,
 } from "../constants";
 import { localStorageEffect } from "./effect";
-import { productApi } from "../api/product";
-import { memberApi } from "../api/member";
+import { productApi } from "../apis/product";
+import { memberApi } from "../apis/member";
 
 export const productsState = atom<ProductType[]>({
   key: "products",

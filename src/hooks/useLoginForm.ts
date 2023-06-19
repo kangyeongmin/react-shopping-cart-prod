@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { api } from "../api";
-import { authApi } from "../api/auth";
+import { api } from "../apis/api";
+import { authApi } from "../apis/auth";
 import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
 import { loginState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";

@@ -11,9 +11,9 @@ import {
 } from "../components";
 import { LocalProductType } from "../types/domain";
 import { selectedProductsState } from "../recoil/atom";
-import { api } from "../api";
+import { api } from "../apis/api";
 import { useLocalProducts } from "../hooks/useLocalProducts";
-import { cartApi } from "../api/cart";
+import { cartApi } from "../apis/cart";
 
 const Cart = () => {
   const { updateLocalProducts } = useLocalProducts();

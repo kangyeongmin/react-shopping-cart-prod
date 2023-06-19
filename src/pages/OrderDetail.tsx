@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { orderApi } from "../api/order";
+import { orderApi } from "../apis/order";
 import { ErrorBoundary, Header, OrderHistory, Page } from "../components";
 import { OrderDetailType } from "../types/domain";
 
