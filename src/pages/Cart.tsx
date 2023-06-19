@@ -13,6 +13,7 @@ import { LocalProductType } from "../types/domain";
 import { selectedProductsState } from "../recoil/atom";
 import { api } from "../api";
 import { useLocalProducts } from "../hooks/useLocalProducts";
+import { cartApi } from "../api/cart";
 
 const Cart = () => {
   const { updateLocalProducts } = useLocalProducts();
@@ -26,14 +27,14 @@ const Cart = () => {
   const deleteSelectedProduct = async () => {
     await Promise.all(
       selectedProducts.map((product) =>
-        api.delete(`/cart-items/${product.cartItemId}`)
+        cartApi.deleteCartItem(product.cartItemId)
       )
     );
     updateLocalProducts();
   };
 
   const deleteOneProduct = async (cartItemId: number) => {
-    await api.delete(`/cart-items/${cartItemId}`);
+    await cartApi.deleteCartItem(cartItemId);
     updateLocalProducts();
   };
 

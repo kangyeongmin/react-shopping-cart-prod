@@ -8,6 +8,7 @@ import { MIN_QUANTITY } from "../constants";
 import { api } from "../api";
 import { useToast } from "../hooks/useToast";
 import { useLocalProducts } from "../hooks/useLocalProducts";
+import { cartApi } from "../api/cart";
 
 export const ProductList = () => {
   const { showToast } = useToast();
@@ -21,7 +22,7 @@ export const ProductList = () => {
       return;
     }
     try {
-      await api.post("/cart-items", { productId: productId });
+      await cartApi.addCartItem(productId);
       updateLocalProducts();
     } catch (error) {
       console.error(error);

@@ -13,13 +13,15 @@ import {
   KEY_LOCALSTORAGE_LOGIN_TOKEN,
 } from "../constants";
 import { localStorageEffect } from "./effect";
+import { productApi } from "../api/product";
+import { memberApi } from "../api/member";
 
 export const productsState = atom<ProductType[]>({
   key: "products",
   default: selector<ProductType[]>({
     key: "initialProducts/default",
     get: () => {
-      return api.get("/products");
+      return productApi.getProducts();
     },
   }),
 });
@@ -62,7 +64,7 @@ export const memberState = atom<MemberType>({
     key: "memberState/default",
     get: async ({ get }) => {
       if (get(loginState)) {
-        return await api.get("/members/profile");
+        return await memberApi.getProfile();
       }
     },
   }),

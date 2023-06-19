@@ -5,6 +5,7 @@ import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
 import { api } from "../api";
 import { LocalProductType } from "../types/domain";
 import { useLocalProducts } from "./useLocalProducts";
+import { cartApi } from "../api/cart";
 
 export const useQuantity = (productId: number) => {
   const { updateLocalProducts } = useLocalProducts();
@@ -24,11 +25,12 @@ export const useQuantity = (productId: number) => {
 
     try {
       if (newQuantity === 0) {
-        await api.delete(`/cart-items/${currentLocalProduct.cartItemId}`);
+        await cartApi.deleteCartItem(currentLocalProduct.cartItemId);
       } else {
-        await api.patch(`/cart-items/${currentLocalProduct.cartItemId}`, {
-          quantity: Number(newQuantity),
-        });
+        await cartApi.updateQuantity(
+          currentLocalProduct.cartItemId,
+          Number(newQuantity)
+        );
       }
       setQuantity(newQuantity.toString());
       await updateLocalProducts();

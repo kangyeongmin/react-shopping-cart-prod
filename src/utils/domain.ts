@@ -1,11 +1,13 @@
 import { api } from "../api";
+import { cartApi } from "../api/cart";
+import { productApi } from "../api/product";
 import { MIN_QUANTITY } from "../constants";
 import { CartItemType, LocalProductType, ProductType } from "../types/domain";
 
 export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const products = await api.get("/products");
-    const cartItems = await api.get("/cart-items");
+    const products = await productApi.getProducts();
+    const cartItems = await cartApi.getCartItems();
 
     return products.map((product: ProductType) => {
       const cartItem = cartItems.find(
@@ -25,7 +27,7 @@ export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
 
 export const makeProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const products = await api.get("/products");
+    const products = await productApi.getProducts();
 
     return products.map((product: ProductType) => {
       return {

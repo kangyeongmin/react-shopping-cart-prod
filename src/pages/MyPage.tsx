@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { api } from "../api";
+import { couponApi } from "../api/coupon";
 import {
   Button,
   CouponSelectBox,
@@ -25,7 +25,7 @@ const MyPage = () => {
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const data = await api.get("/coupons");
+        const data = await couponApi.getCoupons();
         setCoupons(data.coupons);
       } catch (error) {
         console.error(error);
@@ -44,9 +44,11 @@ const MyPage = () => {
     expiredDate.setMonth(expiredDate.getMonth() + 1);
 
     try {
-      await api.post(`/coupons/${coupons[selectedCouponIndex].id}`, {
-        expiredAt: expiredDate,
-      });
+      await couponApi.publishCoupon(
+        coupons[selectedCouponIndex].id,
+        expiredDate
+      );
+
       showToast("success", "쿠폰이 발급되었습니다!");
     } catch (error) {
       console.error(error);

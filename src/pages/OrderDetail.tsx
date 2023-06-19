@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { api } from "../api";
+import { orderApi } from "../api/order";
 import { ErrorBoundary, Header, OrderHistory, Page } from "../components";
 import { OrderDetailType } from "../types/domain";
 
 const OrderDetail = () => {
-  const { orderId } = useParams();
+  const { orderId = "" } = useParams();
   const [orderDetail, setOrderDetail] = useState<OrderDetailType>({
     id: 0,
     products: [],
@@ -16,7 +16,7 @@ const OrderDetail = () => {
   useEffect(() => {
     const fetchOrderDetail = async () => {
       try {
-        const orderDetail = await api.get(`/orders/${orderId}`);
+        const orderDetail = await orderApi.getOrderDetail(orderId);
         setOrderDetail(orderDetail);
       } catch (error) {
         console.error(error);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { api } from "../api";
+import { orderApi } from "../api/order";
 import {
   ErrorBoundary,
   GuideBox,
@@ -16,7 +16,7 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const data = await api.get("/orders");
+        const data = await orderApi.getOrders();
         setOrders(data.orders);
       } catch (error) {
         console.error(error);

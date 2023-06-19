@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 import { api } from "../api";
+import { orderApi } from "../api/order";
 import {
   CouponSelectBox,
   ErrorBoundary,
@@ -29,11 +30,7 @@ const Order = () => {
   useEffect(() => {
     const fetchMyCoupons = async () => {
       try {
-        const cartItemIdsQuery = selectedProducts
-          .map((product) => "cartItemId=" + product.cartItemId.toString())
-          .join("&");
-
-        const data = await api.get(`/orders/coupons?${cartItemIdsQuery}`);
+        const data = await orderApi.getMyCoupons(selectedProducts);
         setCoupons(data.coupons);
       } catch (error) {
         console.error(error);
@@ -54,18 +51,10 @@ const Order = () => {
 
   const handlePaymentClicked = async () => {
     try {
-      const orderedProducts: Omit<LocalProductType, "id">[] =
-        selectedProducts.map((product) => {
-          const newProduct = structuredClone(product);
-          delete newProduct.id;
-          return newProduct;
-        });
       const couponId =
         selectedCouponIndex === -1 ? null : coupons[selectedCouponIndex].id;
-      await api.post("/orders", {
-        products: orderedProducts,
-        couponId: couponId,
-      });
+      orderApi.order(selectedProducts, couponId);
+
       navigate(ROUTER_PATH.Main);
       showToast("success", "결제가 완료되었습니다 👍🏻");
       updateLocalProducts();
