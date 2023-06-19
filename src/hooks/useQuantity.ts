@@ -2,7 +2,6 @@ import { useRecoilValue } from "recoil";
 import { localProductsState } from "../recoil/atom";
 import React, { useEffect, useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
-import { api } from "../apis/api";
 import { LocalProductType } from "../types/domain";
 import { useLocalProducts } from "./useLocalProducts";
 import { cartApi } from "../apis/cart";

@@ -16,8 +16,8 @@ export const orderApi = {
     return api.get(`${ENDPOINT}/coupons/${cartItemIdsQuery}`);
   },
 
-  order: (products: LocalProductType[], couponId: number | null) => {
-    const orderedProducts: Omit<LocalProductType, "id">[] = products.map(
+  order: (selectedProducts: LocalProductType[], couponId: number | null) => {
+    const products: Omit<LocalProductType, "id">[] = selectedProducts.map(
       (product) => {
         const newProduct = structuredClone(product);
         delete newProduct.id;
@@ -26,8 +26,8 @@ export const orderApi = {
     );
 
     return api.post(ENDPOINT, {
-      products: orderedProducts,
-      couponId: couponId,
+      products,
+      couponId,
     });
   },
 };

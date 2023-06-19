@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { generatePath, useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "../router";
 
 export const useNavigatePage = () => {
@@ -25,7 +25,7 @@ export const useNavigatePage = () => {
   };
 
   const goOrderDetail = (orderId: number) => () => {
-    navigate(`${ROUTER_PATH.OrderHistory}/${orderId}`);
+    navigate(generatePath(ROUTER_PATH.OrderDetail, { orderId }));
   };
 
   const goMyPage = () => {
