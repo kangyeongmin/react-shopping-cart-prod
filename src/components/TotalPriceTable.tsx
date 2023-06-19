@@ -1,10 +1,9 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { totalPriceSelector } from "../recoil/selector";
-import { ROUTER_PATH } from "../router";
 import { Button } from "../components";
 import { DELIVERY_FEE } from "../constants";
-import { useNavigate } from "react-router-dom";
+import { useNavigatePage } from "../hooks/useNavigatePage";
 
 interface TotalPriceTableType {
   discountPrice: number | null;
@@ -15,15 +14,11 @@ export const TotalPriceTable = ({
   discountPrice,
   handlePaymentClicked,
 }: TotalPriceTableType) => {
-  const navigate = useNavigate();
+  const { goOrder } = useNavigatePage();
   const totalPrice = useRecoilValue(totalPriceSelector);
   const deliveryFee = totalPrice === 0 ? 0 : DELIVERY_FEE;
   const paymentPrice =
     totalPrice + deliveryFee - (discountPrice ? discountPrice : 0);
-
-  const goOrderPage = () => {
-    navigate(ROUTER_PATH.Order);
-  };
 
   return (
     <Wrapper>
@@ -49,7 +44,7 @@ export const TotalPriceTable = ({
       {handlePaymentClicked ? (
         <Button onClick={handlePaymentClicked}>결제하기</Button>
       ) : (
-        <Button disabled={totalPrice === 0} onClick={goOrderPage}>
+        <Button disabled={totalPrice === 0} onClick={goOrder}>
           주문하기
         </Button>
       )}

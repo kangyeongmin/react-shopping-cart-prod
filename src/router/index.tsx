@@ -16,7 +16,6 @@ export const ROUTER_PATH = {
   MyPage: "/MyPage",
   Order: "/Cart/Order",
   OrderHistory: "/OrderHistory",
-  OrderDetail: "/OrderHistory/Detail",
   NotFound: "/*",
 };
 
@@ -47,7 +46,7 @@ export const PageRouterProvider = () => {
       element: <OrderHistory />,
     },
     {
-      path: ROUTER_PATH.OrderDetail + "/:orderId",
+      path: ROUTER_PATH.OrderHistory + "/:orderId",
       element: <OrderDetail />,
     },
     { path: ROUTER_PATH.NotFound, element: <NotFound /> },

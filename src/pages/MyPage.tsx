@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { couponApi } from "../apis/coupon";
@@ -10,13 +9,13 @@ import {
   Header,
   Page,
 } from "../components";
+import { useNavigatePage } from "../hooks/useNavigatePage";
 import { useToast } from "../hooks/useToast";
 import { memberState } from "../recoil/atom";
-import { ROUTER_PATH } from "../router";
 import { MyCouponType } from "../types/domain";
 
 const MyPage = () => {
-  const navigate = useNavigate();
+  const { goOrderHistory } = useNavigatePage();
   const { showToast } = useToast();
   const member = useRecoilValue(memberState);
   const [coupons, setCoupons] = useState<MyCouponType[]>([]);
@@ -55,10 +54,6 @@ const MyPage = () => {
     }
   };
 
-  const goOrderHistoryPage = () => {
-    navigate(ROUTER_PATH.OrderHistory);
-  };
-
   return (
     <ErrorBoundary>
       <Header />
@@ -67,7 +62,7 @@ const MyPage = () => {
           <p>🖐🏻 {member.nickname}</p> 님, 즐거운 쇼핑 되세요!
         </ProfileBox>
         <OptionsContainer>
-          <OptionBox onClick={goOrderHistoryPage}>주문 내역 보러가기</OptionBox>
+          <OptionBox onClick={goOrderHistory}>주문 내역 보러가기</OptionBox>
           <CouponOptionContainer>
             <CouponSelectBox
               type="get"

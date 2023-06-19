@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import { Button } from "../../components";
-import { ROUTER_PATH } from "../../router";
-import { useNavigate } from "react-router-dom";
+import { useNavigatePage } from "../../hooks/useNavigatePage";
 
 interface GuideType {
   icon: string;
@@ -10,13 +9,13 @@ interface GuideType {
 }
 
 export const GuideBox = ({ icon, message, guideMessage }: GuideType) => {
-  const navigate = useNavigate();
+  const { goMain } = useNavigatePage();
 
   return (
     <Wrapper>
       <span>{icon}</span>
       <p>{message}</p>
-      <Button onClick={() => navigate(ROUTER_PATH.Main)}>{guideMessage}</Button>
+      <Button onClick={goMain}>{guideMessage}</Button>
     </Wrapper>
   );
 };

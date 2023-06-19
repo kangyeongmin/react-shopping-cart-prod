@@ -4,12 +4,13 @@ import { useRecoilValue } from "recoil";
 import { cartNumberSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { loginState, memberState } from "../recoil/atom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ServerSelectBox } from "./ServerSelectBox";
 import { useLoginForm } from "../hooks/useLoginForm";
+import { useNavigatePage } from "../hooks/useNavigatePage";
 
 export const Header = () => {
-  const navigate = useNavigate();
+  const { goMain, goLogin, goCart, goMyPage } = useNavigatePage();
   const { logout } = useLoginForm();
   const location = useLocation();
   const user = useRecoilValue(memberState);
@@ -18,17 +19,17 @@ export const Header = () => {
 
   return (
     <Wrapper>
-      <TitleContainer onClick={() => navigate(ROUTER_PATH.Main)}>
+      <TitleContainer onClick={goMain}>
         <img src={CartIcon} alt="홈카트" />
         <p>SHOP</p>
       </TitleContainer>
       <NavContainer>
         <ServerSelectBox />
         {!isLogined ? (
-          <p onClick={() => navigate(ROUTER_PATH.Login)}>로그인</p>
+          <p onClick={goLogin}>로그인</p>
         ) : (
           <>
-            <CartContainer onClick={() => navigate(ROUTER_PATH.Cart)}>
+            <CartContainer onClick={goCart}>
               <CartBox pathname={location.pathname}>
                 {user.nickname}의 장바구니
               </CartBox>
@@ -37,17 +38,10 @@ export const Header = () => {
                 <ItemQuantityBox>{cartNumber}</ItemQuantityBox>
               )}
             </CartContainer>
-            <MypageBox
-              pathname={location.pathname}
-              onClick={() => navigate(ROUTER_PATH.MyPage)}
-            >
+            <MypageBox pathname={location.pathname} onClick={goMyPage}>
               마이페이지
             </MypageBox>
-            <HumanIconBox
-              onClick={() => navigate(ROUTER_PATH.MyPage)}
-              src={HumanIcon}
-              alt="사람"
-            />
+            <HumanIconBox onClick={goMyPage} src={HumanIcon} alt="사람" />
             <span onClick={logout}>로그아웃</span>
           </>
         )}

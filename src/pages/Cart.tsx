@@ -11,7 +11,6 @@ import {
 } from "../components";
 import { LocalProductType } from "../types/domain";
 import { selectedProductsState } from "../recoil/atom";
-import { api } from "../apis/api";
 import { useLocalProducts } from "../hooks/useLocalProducts";
 import { cartApi } from "../apis/cart";
 

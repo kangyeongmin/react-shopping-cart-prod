@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { api } from "../apis/api";
 import { orderApi } from "../apis/order";
 import {
   CouponSelectBox,
@@ -13,13 +11,13 @@ import {
   TotalPriceTable,
 } from "../components";
 import { useLocalProducts } from "../hooks/useLocalProducts";
+import { useNavigatePage } from "../hooks/useNavigatePage";
 import { useToast } from "../hooks/useToast";
 import { selectedProductsState } from "../recoil/atom";
-import { ROUTER_PATH } from "../router";
-import { MyCouponType, LocalProductType } from "../types/domain";
+import { MyCouponType } from "../types/domain";
 
 const Order = () => {
-  const navigate = useNavigate();
+  const { goMain } = useNavigatePage();
   const { showToast } = useToast();
   const { updateLocalProducts } = useLocalProducts();
   const [coupons, setCoupons] = useState<MyCouponType[]>([]);
@@ -40,7 +38,7 @@ const Order = () => {
     fetchMyCoupons();
   }, []);
 
-  const handleCouponSelected = (index: number) => {
+  const selectCoupon = (index: number) => {
     setSelectedCouponIndex(index);
     if (index === -1) {
       setDiscountPrice(null);
@@ -49,13 +47,13 @@ const Order = () => {
     setDiscountPrice(coupons[index].discountPrice);
   };
 
-  const handlePaymentClicked = async () => {
+  const orderAndPay = async () => {
     try {
       const couponId =
         selectedCouponIndex === -1 ? null : coupons[selectedCouponIndex].id;
       orderApi.order(selectedProducts, couponId);
 
-      navigate(ROUTER_PATH.Main);
+      goMain();
       showToast("success", "결제가 완료되었습니다 👍🏻");
       updateLocalProducts();
     } catch (error) {
@@ -74,11 +72,11 @@ const Order = () => {
             <CouponSelectBox
               type="apply"
               coupons={coupons}
-              onSelect={handleCouponSelected}
+              onSelect={selectCoupon}
             />
             <TotalPriceTable
               discountPrice={discountPrice}
-              handlePaymentClicked={handlePaymentClicked}
+              handlePaymentClicked={orderAndPay}
             />
           </PriceContainer>
         </Container>

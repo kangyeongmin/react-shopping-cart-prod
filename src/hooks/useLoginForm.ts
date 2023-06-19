@@ -1,19 +1,17 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { api } from "../apis/api";
 import { authApi } from "../apis/auth";
 import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
 import { loginState } from "../recoil/atom";
-import { ROUTER_PATH } from "../router";
 import { setLocalStorage } from "../utils";
 import { useLocalProducts } from "./useLocalProducts";
+import { useNavigatePage } from "./useNavigatePage";
 import { useToast } from "./useToast";
 
 export const useLoginForm = () => {
   const { showToast } = useToast();
   const { updateLocalProducts } = useLocalProducts();
-  const navigate = useNavigate();
+  const { goMain } = useNavigatePage();
   const setIsLogined = useSetRecoilState(loginState);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -40,7 +38,7 @@ export const useLoginForm = () => {
       await authApi.login();
       setIsLogined(true);
       await updateLocalProducts();
-      navigate(ROUTER_PATH.Main);
+      goMain();
     } catch (error) {
       localStorage.clear();
       console.error(error);
@@ -50,7 +48,7 @@ export const useLoginForm = () => {
   const logout = async () => {
     localStorage.clear();
     setIsLogined(false);
-    navigate(ROUTER_PATH.Main);
+    goMain();
     showToast("success", `로그아웃 되었습니다. ✅`);
   };
 
