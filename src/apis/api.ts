@@ -6,12 +6,18 @@ import {
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
+import { worker } from "../mocks/browser";
 
 const request = async (path: string, init?: RequestInit) => {
   const baseServerUrl =
     SERVERS[
       getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
     ];
+
+  if (baseServerUrl === "") {
+    worker.start({ onUnhandledRequest: "bypass" });
+  }
+
   const token = getLocalStorage(
     KEY_LOCALSTORAGE_LOGIN_TOKEN,
     DEFAULT_VALUE_LOGIN_TOKEN

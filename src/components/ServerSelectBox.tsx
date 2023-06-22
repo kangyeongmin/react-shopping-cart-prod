@@ -39,7 +39,7 @@ export const ServerSelectBox = () => {
 };
 
 const SelectBox = styled.select`
-  width: 65px;
+  width: 80px;
   height: 40px;
 
   padding: 0 5px;
@@ -51,7 +51,7 @@ const SelectBox = styled.select`
   font-weight: 600;
 
   @media screen and (max-width: 850px) {
-    width: 70px;
+    width: 75px;
     height: 37px;
   }
 `;

@@ -5,7 +5,6 @@ import {
   ToastType,
   MemberType,
 } from "../types/domain";
-import { api } from "../apis/api";
 import { makeLocalProducts, makeProducts } from "../utils/domain";
 import { getLocalStorage } from "../utils";
 import {

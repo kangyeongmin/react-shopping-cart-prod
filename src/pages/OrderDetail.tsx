@@ -24,7 +24,7 @@ const OrderDetail = () => {
     };
 
     fetchOrderDetail();
-  }, []);
+  }, [orderId]);
 
   return (
     <ErrorBoundary>

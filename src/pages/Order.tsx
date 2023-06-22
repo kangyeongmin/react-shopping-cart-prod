@@ -53,9 +53,9 @@ const Order = () => {
         selectedCouponIndex === -1 ? null : coupons[selectedCouponIndex].id;
       orderApi.order(selectedProducts, couponId);
 
+      await updateLocalProducts();
       goMain();
       showToast("success", "결제가 완료되었습니다 👍🏻");
-      updateLocalProducts();
     } catch (error) {
       console.error(error);
     }

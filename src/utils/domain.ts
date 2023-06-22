@@ -1,4 +1,3 @@
-import { api } from "../apis/api";
 import { cartApi } from "../apis/cart";
 import { productApi } from "../apis/product";
 import { MIN_QUANTITY } from "../constants";
