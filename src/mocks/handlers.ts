@@ -6,12 +6,12 @@ import { LocalProductType, ProductType } from "../types/domain";
 import { getLocalStorage, setLocalStorage } from "../utils";
 
 export const handlers = [
-  // 상품 목록 조회
+  // products
   rest.get("/products", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockProductsData));
   }),
 
-  // 장바구니 아이템 목록 조회
+  // cart-items
   rest.get("/cart-items", (req, res, ctx) => {
     return res(
       ctx.status(200),
@@ -19,7 +19,6 @@ export const handlers = [
     );
   }),
 
-  // 장바구니 아이템 추가
   rest.post("/cart-items", async (req, res, ctx) => {
     const { productId } = await req.json();
 
@@ -48,7 +47,6 @@ export const handlers = [
     );
   }),
 
-  // 장바구니 아이템 수량 변경
   rest.patch("/cart-items/:cartItemId", async (req, res, ctx) => {
     const { cartItemId } = req.params;
     const { quantity } = await req.json();
@@ -67,7 +65,6 @@ export const handlers = [
     return res(ctx.status(200));
   }),
 
-  // 장바구니 아이템 삭제
   rest.delete("/cart-items/:cartItemId", (req, res, ctx) => {
     const { cartItemId } = req.params;
 
@@ -83,8 +80,14 @@ export const handlers = [
     return res(ctx.status(204));
   }),
 
+  // members
+
   rest.get("/members/profile", (req, res, ctx) => {
-    console.log(mockProfileData);
     return res(ctx.status(200), ctx.json(mockProfileData));
+  }),
+
+  // auth
+  rest.post("/auth/login", (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
 ];
