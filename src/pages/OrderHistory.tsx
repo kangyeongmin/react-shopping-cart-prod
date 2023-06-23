@@ -28,11 +28,16 @@ const OrderHistory = () => {
 
   if (orders.length === 0)
     return (
-      <GuideBox
-        icon="🛒"
-        message="주문 목록이 없어요"
-        guideMessage="상품 주문하러 가기"
-      />
+      <>
+        <Header />
+        <Page>
+          <GuideBox
+            icon="🛒"
+            message="주문 목록이 없어요"
+            guideMessage="상품 주문하러 가기"
+          />
+        </Page>
+      </>
     );
 
   return (

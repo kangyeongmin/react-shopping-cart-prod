@@ -39,11 +39,16 @@ const Cart = () => {
 
   if (cartProducts.length === 0)
     return (
-      <GuideBox
-        icon="🛒"
-        message="장바구니가 텅 비었어요"
-        guideMessage="상품 담으러 가기"
-      />
+      <>
+        <Header />
+        <Page>
+          <GuideBox
+            icon="🛒"
+            message="장바구니가 텅 비었어요"
+            guideMessage="상품 담으러 가기"
+          />
+        </Page>
+      </>
     );
 
   return (
