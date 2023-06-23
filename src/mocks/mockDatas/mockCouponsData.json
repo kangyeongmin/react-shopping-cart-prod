@@ -1,0 +1,19 @@
+{
+  "coupons": [
+    {
+      "id": 1,
+      "name": "10% 햘인 쿠폰",
+      "minOrderPrice": 10000
+    },
+    {
+      "id": 2,
+      "name": "15% 햘인 쿠폰",
+      "minOrderPrice": 20000
+    },
+    {
+      "id": 3,
+      "name": "5000원 햘인 쿠폰",
+      "minOrderPrice": 40000
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 import { rest } from "msw";
 import { KEY_LOCALSTORAGE_CART } from "../constants";
-import mockProductsData from "../mockProductsData.json";
-import mockProfileData from "../mockProfileData.json";
+import mockProductsData from "./mockDatas/mockProductsData.json";
+import mockProfileData from "./mockDatas/mockProfileData.json";
+import mockCouponsData from "./mockDatas/mockCouponsData.json";
 import { LocalProductType, ProductType } from "../types/domain";
 import { getLocalStorage, setLocalStorage } from "../utils";
 
@@ -89,5 +90,10 @@ export const handlers = [
   // auth
   rest.post("/auth/login", (req, res, ctx) => {
     return res(ctx.status(200));
+  }),
+
+  // coupons
+  rest.get("/coupons", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(mockCouponsData));
   }),
 ];

@@ -34,7 +34,7 @@ export const CouponSelectBox = ({
   };
 
   const toggleSelectBox = () => {
-    if (isOpen && type === "get") {
+    if (type === "get") {
       onSelect(NONE_SELECTED_INDEX);
       setCouponTitle(COUPON_TITLE_MAP[type]);
     }
